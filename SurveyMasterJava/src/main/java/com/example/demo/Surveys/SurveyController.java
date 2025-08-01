@@ -77,22 +77,37 @@ public class SurveyController {
         surveyService.deleteSurvey(surveyId);
         return ResponseEntity.ok().build();
     }
-  @PutMapping("/radioResult/{questionId}/{index}")
-    public  ResponseEntity<Question>addRadioResult (@PathVariable Long questionId, @PathVariable int index ){
-        Question question = surveyService.setResult(questionId,index);
+  @PutMapping("/radioResult/{questionId}/{index}/{surveyId}/{userId}")
+    public  ResponseEntity<Question>addRadioResult (@PathVariable Long questionId,
+                                                    @PathVariable int index,
+                                                    @PathVariable Long surveyId,
+                                                    @PathVariable Long userId ){
+        Question question = surveyService.setResult(questionId,index,surveyId,userId);
         return ResponseEntity.ok(question);
   }
-  @PutMapping("/textResult/{questionId}")
-    public ResponseEntity<Question>addStringResult(@PathVariable Long questionId, @RequestBody String answer){
-       Question question= surveyService.setStringResult(questionId,answer);
+  @PutMapping("/textResult/{questionId}/{surveyId}/{userId}")
+    public ResponseEntity<Question>addStringResult(@PathVariable Long questionId,
+                                                   @RequestBody String answer,
+                                                   @PathVariable Long surveyId,
+                                                   @PathVariable Long userId){
+       Question question= surveyService.setStringResult(questionId,answer,surveyId,userId);
       return ResponseEntity.ok(question);
   }
-  @PutMapping("/checkBoxResult/{questionId}")
-    public ResponseEntity<Question>addChickBoxResult(@PathVariable Long questionId, @RequestBody int[] indexes){
+  @PutMapping("/checkBoxResult/{questionId}/{surveyId}/{userId}")
+    public ResponseEntity<Question>addChickBoxResult(@PathVariable Long questionId,
+                                                     @RequestBody int[] indexes,
+                                                     @PathVariable Long surveyId,
+                                                     @PathVariable Long userId){
 
-Question question = surveyService.setCheckBoxResult(questionId,indexes);
+Question question = surveyService.setCheckBoxResult(questionId,indexes,surveyId,userId);
       return ResponseEntity.ok(question);
 
+  }
+  @PutMapping("/addVoter/{surveyId}/{userId}")
+    public ResponseEntity<Survey>addVoter( @PathVariable Long surveyId,
+                                           @PathVariable Long userId ){
+        surveyService.addVoter(surveyId,userId);
+        return ResponseEntity.ok().build();
   }
 
 }

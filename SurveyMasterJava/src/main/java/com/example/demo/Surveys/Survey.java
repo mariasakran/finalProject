@@ -24,6 +24,8 @@ public class Survey {
     private Long userId;
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
+    @Column
+    private List<Long> voters=new ArrayList<>();
     // Constructors
     public Survey() {}
 
@@ -40,6 +42,9 @@ public class Survey {
     public void addQuestion(Question question) {
         questions.add(question);
         question.setSurvey(this);
+    }
+    public void addVoter(Long voterId){
+        voters.add(voterId);
     }
 
     public boolean isAccepted() {
@@ -108,4 +113,12 @@ public class Survey {
             questions.forEach(q -> q.setSurvey(this));
 }
 }
+
+    public List<Long> getVoters() {
+        return voters;
+    }
+
+    public void setVoters(List<Long> voters) {
+        this.voters = voters;
+    }
 }

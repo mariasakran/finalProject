@@ -101,21 +101,42 @@ public void deleteSurvey(Long surveyId){
             throw new RuntimeException(("survey not found with id " + surveyId));
     surveyRepository.deleteById(surveyId);
 }
-public Question setResult(Long questionId , int index){
-Question question = questionRepository.findById(questionId)
-        .orElseThrow(()-> new RuntimeException("question not found"));
-int [] updateResult= question.getQuestionResult();
-updateResult[index]++;
-question.setQuestionResult(updateResult);
- return questionRepository.save(question);
+public void addVoter(Long surveyId,Long userId){
+    Survey survey=surveyRepository.findById(surveyId)
+            .orElseThrow(()-> new RuntimeException("survey not found"));
+    if(surveyRepository.hasVoter(surveyId,userId)) {
+        throw new RuntimeException("you already voted");
+    }
+    survey.addVoter(userId);
+    surveyRepository.save(survey);
+
 }
-public Question setStringResult(Long questionId ,String result){
+public Question setResult(Long questionId , int index,Long surveyId,Long userId){
+    if(surveyRepository.hasVoter(surveyId,userId)) {
+        throw new RuntimeException("you already voted");
+    }
+
+    Question question = questionRepository.findById(questionId)
+            .orElseThrow(()-> new RuntimeException("question not found"));
+    int [] updateResult= question.getQuestionResult();
+    updateResult[index]++;
+    question.setQuestionResult(updateResult);
+     return questionRepository.save(question);
+}
+public Question setStringResult(Long questionId ,String result,Long surveyId,Long userId){
+    if(surveyRepository.hasVoter(surveyId,userId)) {
+        throw new RuntimeException("you already voted");
+    }
+
 Question question = questionRepository.findById(questionId)
             .orElseThrow(()-> new RuntimeException("question not found"));
 question.addStringResult(result);
 return questionRepository.save(question);
 }
-public Question setCheckBoxResult (Long questionId ,int[] index){
+public Question setCheckBoxResult (Long questionId ,int[] index,Long surveyId,Long userId){
+    if(surveyRepository.hasVoter(surveyId,userId)) {
+        throw new RuntimeException("you already voted");
+    }
 Question question = questionRepository.findById(questionId)
             .orElseThrow(()-> new RuntimeException("question not found"));
     int [] updateResult= question.getQuestionResult();

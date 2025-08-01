@@ -8,6 +8,11 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
     List<Survey> findByIsAcceptedTrueAndIsFinishedFalse();
     List<Survey> findByIsAcceptedFalseAndIsFinishedFalse();
     List<Survey> findByUserId(Long userId);
+    default boolean hasVoter(Long surveyId, Long voterId) {
+        return findById(surveyId)
+                .map(survey -> survey.getVoters().contains(voterId))
+                .orElse(false);
+    }
 
 }
 
