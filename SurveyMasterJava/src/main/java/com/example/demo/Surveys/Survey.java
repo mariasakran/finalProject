@@ -26,7 +26,6 @@ public class Survey {
     private List<Question> questions = new ArrayList<>();
     @Column
     private List<Long> voters=new ArrayList<>();
-    // Constructors
     public Survey() {}
 
     public Survey(String category, String title, String description, Long userId) {

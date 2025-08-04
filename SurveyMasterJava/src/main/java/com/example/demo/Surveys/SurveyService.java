@@ -53,19 +53,6 @@ public class SurveyService {
 
 
 
-    public Survey addQuestionToSurvey(Long surveyId, Question question) {
-        Survey survey=surveyRepository.findById(surveyId)
-                .orElseThrow(()-> new RuntimeException("survey not found"));
-        question.setSurvey(survey);
-        List<Question>questions=survey.getQuestions();
-        questions.add(question);
-        survey.setQuestions(questions);
-        return surveyRepository.save(survey);
-    }
-
-
-
-
 
     public Survey createCompleteSurvey(SurveyRequestDTO surveyRequest) {
         Survey survey = new Survey();
@@ -75,8 +62,6 @@ public class SurveyService {
         survey.setCategory(surveyRequest.getCategory());
         survey.setUserId(surveyRequest.getUserid());
         survey.setFinished(false);
-
-
         surveyRequest.getQuestions().forEach(qDto -> {
             Question question = new Question();
             question.setText(qDto.getText());

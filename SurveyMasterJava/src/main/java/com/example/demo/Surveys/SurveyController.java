@@ -42,17 +42,6 @@ public class SurveyController {
         return ResponseEntity.ok(surveys);
     }
 
-    
-
-    @PostMapping("/{surveyId}/questions")
-    public ResponseEntity<Survey> addQuestionToSurvey(
-            @PathVariable Long surveyId,
-            @RequestBody Question question) {
-        Survey updatedSurvey = surveyService.addQuestionToSurvey(surveyId, question);
-        return ResponseEntity.ok(updatedSurvey);
-    }
-
-
     @PostMapping
     public ResponseEntity<Survey> createCompleteSurvey(@RequestBody SurveyRequestDTO surveyRequest) {
         Survey createdSurvey = surveyService.createCompleteSurvey(surveyRequest);
@@ -71,11 +60,6 @@ public class SurveyController {
         return ResponseEntity.ok(survey);
 
 
-    }
-    @DeleteMapping("/{surveyId}")
-    public ResponseEntity<Survey> deleteSurvey(@PathVariable Long surveyId){
-        surveyService.deleteSurvey(surveyId);
-        return ResponseEntity.ok().build();
     }
   @PutMapping("/radioResult/{questionId}/{index}/{surveyId}/{userId}")
     public  ResponseEntity<Question>addRadioResult (@PathVariable Long questionId,
@@ -109,5 +93,10 @@ Question question = surveyService.setCheckBoxResult(questionId,indexes,surveyId,
         surveyService.addVoter(surveyId,userId);
         return ResponseEntity.ok().build();
   }
+    @DeleteMapping("/{surveyId}")
+    public ResponseEntity<Survey> deleteSurvey(@PathVariable Long surveyId){
+        surveyService.deleteSurvey(surveyId);
+        return ResponseEntity.ok().build();
+    }
 
 }

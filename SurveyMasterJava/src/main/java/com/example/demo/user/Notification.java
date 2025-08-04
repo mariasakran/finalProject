@@ -17,15 +17,13 @@ public class Notification {
  @Column( nullable = false)
  @NotBlank(message = "content cannot be empty or null")
  private String content;
- @Column
- private boolean isAccepted;
 
 
-    public Notification(Long userId, String title, String content, boolean isAccepted) {
+
+    public Notification(Long userId, String title, String content) {
         this.userId = userId;
         this.title = title;
         this.content = content;
-        this.isAccepted = isAccepted;
     }
 
     public Notification() {
@@ -55,13 +53,6 @@ public class Notification {
         this.id = id;
     }
 
-    public boolean isAccepted() {
-        return isAccepted;
-    }
-
-    public void setAccepted(boolean accepted) {
-        isAccepted = accepted;
-    }
 
     public String getContent() {
         return content;
@@ -76,8 +67,7 @@ public class Notification {
         return "Notification{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", content='" + content + '\'' +
-                ", isAccepted=" + isAccepted +
-                '}';
+                ", content='" + content + '\''
+              ;
     }
 }
