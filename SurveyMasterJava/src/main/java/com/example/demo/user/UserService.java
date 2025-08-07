@@ -16,6 +16,8 @@ public class UserService {
     private final NotificationRepository notificationRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RandomCodeGenerator randomCodeGenerator;
 
     public UserService(UserRepository userRepository, NotificationRepository notificationRepository) {
         this.userRepository = userRepository;
@@ -78,7 +80,7 @@ public class UserService {
     public User editPassword(String Password, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("user not found"));
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        String encodedPassword = passwordEncoder.encode(Password);
 
         user.setPassword(encodedPassword);
         return userRepository.save(user);
@@ -99,5 +101,9 @@ notificationRepository.deleteById(notificationId);
    }
    public Long deleteNotificationByUserId (Long userId){
     return notificationRepository.deleteByUserId(userId);
+   }
+   public void requestUpdatePassword(String username){
+        User user=userRepository.findByUsername(username);
+
    }
 }
