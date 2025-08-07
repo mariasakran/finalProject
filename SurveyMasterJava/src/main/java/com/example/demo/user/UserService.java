@@ -4,16 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import org.springframework.stereotype.Service;
 
 
 @Service
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
+    @Autowired
     private final NotificationRepository notificationRepository;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, NotificationRepository notificationRepository) {
         this.userRepository = userRepository;
@@ -21,6 +23,7 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
+
         return userRepository.findAll();
     }
 
@@ -33,16 +36,19 @@ public class UserService {
         }
     }
 
-
     public User getUserByUsername(String username) {
+
         return userRepository.findByUsername(username);
     }
 
     public User saveUser(User user) {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         return userRepository.save(user);
     }
 
     public Optional<User> findById(Long id) {
+
         return userRepository.findById(id);
     }
 
@@ -52,7 +58,8 @@ public class UserService {
             User user = userOptional.get();
             user.setUsername(userDetails.getUsername());
             user.setEmail(userDetails.getEmail());
-            user.setPassword(userDetails.getPassword());
+            String encodedPassword = passwordEncoder.encode(userDetails.getPassword());
+            user.setPassword(encodedPassword);
             user.setRole(userDetails.getRole());
             user.setCategory(userDetails.getCategory());
             return userRepository.save(user);
@@ -71,7 +78,9 @@ public class UserService {
     public User editPassword(String Password, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("user not found"));
-        user.setPassword(Password);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+
+        user.setPassword(encodedPassword);
         return userRepository.save(user);
     }
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome Email</title>
+</head>
+<body style="margin:0; padding:0; font-family: Arial, sans-serif; background-color: #0a192f; color: #ccd6f6;">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #0a192f; padding: 2rem;">
+    <tr>
+        <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color: #112240; border-radius: 10px; overflow: hidden;">
+                <tr>
+                    <td style="padding: 2rem; text-align: center;">
+                        <h1 style="color: #64ffda;">Welcome, <span th:text="${username}">User</span>! 👋</h1>
+                        <p style="font-size: 1rem; color: #ccd6f6; line-height: 1.5;">
+                            We're thrilled to have you join our survey platform. Here's what makes us different:
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 0 2rem 2rem 2rem;">
+                        <ul style="text-align: left; color: #a8b2d1; font-size: 1rem; line-height: 1.6;">
+                            <li><strong style="color: #64ffda;">🕵️ Anonymous Participation:</strong> No one can see who created or filled a survey — total privacy!</li>
+                            <li><strong style="color: #64ffda;">📂 Rich Categories:</strong> Choose from a wide range of survey categories or create your own.</li>
+                            <li><strong style="color: #64ffda;">📝 Create & Share Surveys:</strong> Quickly make engaging surveys and track results easily.</li>
+                            <li><strong style="color: #64ffda;">📊 Powerful Results:</strong> View real-time responses with clean visual summaries.</li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center; padding: 1.5rem;">
+                        <a href="http://localhost:4200/login" target="_blank"
+                           style="background-color: #64ffda; color: #0a192f; padding: 0.75rem 2rem; text-decoration: none; border-radius: 50px; font-weight: bold;">
+                            🚀 Get Started
+                        </a>
+                    </td>
+                </tr>
+
+
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

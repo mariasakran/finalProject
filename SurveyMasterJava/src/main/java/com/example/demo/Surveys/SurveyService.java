@@ -1,5 +1,8 @@
 package com.example.demo.Surveys;
 
+import com.example.demo.EmailSender.EmailService;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,11 @@ public class SurveyService {
     private final AnswerOptionRepository answerOptionRepository;
 
     @Autowired
+    private EmailService emailService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     public SurveyService(SurveyRepository surveyRepository,
                          QuestionRepository questionRepository,
                          AnswerOptionRepository answerOptionRepository) {
@@ -23,6 +31,9 @@ public class SurveyService {
     public List<Survey>getUnAcceptedSurveys(){
         return surveyRepository.findByIsAcceptedFalseAndIsFinishedFalse();
 
+    }
+    public List<Survey>getSurveysByCategory(String Category){
+        return surveyRepository.findByCategory(Category);
     }
     public Survey markIsAccepted(Long surveyId){
         Survey survey = surveyRepository.findById(surveyId)
@@ -50,7 +61,9 @@ public class SurveyService {
      public List<Survey> getAllSurveysByUserId(Long userId){
         return  surveyRepository.findByUserId( userId);
      }
-
+     public List<Survey>getAllFinishedSurveys(){
+        return surveyRepository.findByIsAcceptedTrueAndIsFinishedTrue();
+     }
 
 
 
@@ -127,7 +140,6 @@ Question question = questionRepository.findById(questionId)
     int [] updateResult= question.getQuestionResult();
     for (int i=0;i<index.length;i++){
         updateResult[index[i]]++;
-
     }
   question.setQuestionResult(updateResult);
     return questionRepository.save(question);

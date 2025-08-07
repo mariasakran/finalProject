@@ -41,6 +41,16 @@ public class SurveyController {
         List<Survey> surveys = surveyService.getUnAcceptedSurveys();
         return ResponseEntity.ok(surveys);
     }
+    @GetMapping("/getAcceptedSurveys")
+    public ResponseEntity<List<Survey>>getAcceptedSurveys(){
+        List<Survey> surveys = surveyService.getAllFinishedSurveys();
+        return ResponseEntity.ok(surveys);
+    }
+    @GetMapping("/getByCategory/{category}")
+    public ResponseEntity<List<Survey>>getByCategory(@PathVariable String category){
+        List<Survey> surveys = surveyService.getSurveysByCategory(category);
+        return ResponseEntity.ok(surveys);
+    }
 
     @PostMapping
     public ResponseEntity<Survey> createCompleteSurvey(@RequestBody SurveyRequestDTO surveyRequest) {

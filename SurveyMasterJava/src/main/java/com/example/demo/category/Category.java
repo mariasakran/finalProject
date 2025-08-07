@@ -14,7 +14,15 @@ public class Category {
     @Column(name="type",unique = true)
     private String type;
     @Column
+    private String description;
+    @Column
     private boolean isAccepted;
+
+    public Category( String type, String description) {
+        this.type = type;
+        this.description = description;
+        this.isAccepted = false;
+    }
 
     public boolean isAccepted() {
         return isAccepted;
@@ -36,6 +44,14 @@ public class Category {
         this.type = type;
         this.isAccepted=false;
 
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long getId() {

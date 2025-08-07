@@ -1,22 +1,16 @@
 package com.example.demo.user;
 
 public class LoginResponse {
-    private String token;
+
     private User user;
 
-    public LoginResponse(String token, User user) {
-        this.token = token;
+    public LoginResponse( User user) {
+
         this.user = user;
     }
 
-    // Getters and setters
-    public String getToken() {
-        return token;
-    }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+
 
     public User getUser() {
         return user;

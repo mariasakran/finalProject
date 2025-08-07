@@ -40,9 +40,9 @@ public class CategoryController {
 
 
     @DeleteMapping("/{id}")
-    public boolean deleteCategory(@PathVariable Long id) {
-
-        return service.deleteCategoryById(id);
+    public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
+        service.deleteCategoryById(id);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/IsAccepted/{categoryId}")

@@ -37,12 +37,10 @@ public class CategoryService {
         return repository.findAll();
     }
 
-    public boolean deleteCategoryById(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return true;
-        } else {
-            return  false;
-        }
+    public void deleteCategoryById(Long id) {
+        if (!repository.existsById(id))
+            throw new RuntimeException("category not found");
+        repository.deleteById(id);
+
     }
 }

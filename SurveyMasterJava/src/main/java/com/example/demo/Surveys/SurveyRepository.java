@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface SurveyRepository extends JpaRepository<Survey, Long> {
     List<Survey> findByIsAcceptedTrueAndIsFinishedFalse();
+    List<Survey> findByIsAcceptedTrueAndIsFinishedTrue();
+    List<Survey> findByCategory(String category);
     List<Survey> findByIsAcceptedFalseAndIsFinishedFalse();
     List<Survey> findByUserId(Long userId);
     default boolean hasVoter(Long surveyId, Long voterId) {

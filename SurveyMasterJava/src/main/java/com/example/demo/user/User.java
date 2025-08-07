@@ -17,11 +17,11 @@ public class User {
     @Column( nullable = false)
     @NotBlank(message = "Password cannot be empty or null")
     private String password;
-    @Column(nullable = false)
+    @Column(unique = true,nullable = false)
     @NotBlank(message = "email cannot be empty or null")
     private String email;
     @Column
-    private String  Category;
+    private String  category;
     @Column
     private String role;
 
@@ -80,11 +80,11 @@ public class User {
     }
 
     public String getCategory() {
-        return Category;
+        return category;
     }
 
     public void setCategory(String category) {
-        this.Category = category;
+        this.category = category;
     }
 
     public String getRole() {
@@ -102,7 +102,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", Email='" + email + '\'' +
-                ", Category='" + Category + '\'' +
+                ", Category='" + category + '\'' +
                 ", Role='" + role + '\'' +
                 '}';
     }

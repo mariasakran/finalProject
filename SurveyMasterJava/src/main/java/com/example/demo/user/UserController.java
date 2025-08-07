@@ -60,7 +60,7 @@ public class UserController {
         Optional<User> UserOptional = userService.findById(id);
         if (UserOptional.isPresent()) {
             userService.deleteAccountById(id); // Call the service to delete the account
-            return ResponseEntity.ok("Account deleted successfully");
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(401).body(null);
         }
