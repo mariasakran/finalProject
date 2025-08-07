@@ -77,8 +77,6 @@ public class UserController {
         String email = request.get("email");
         User user = userService.editEmail(email,userId);
         return ResponseEntity.ok(user);
-
-
     }
 
     @PutMapping("/{userId}/editPassword")
@@ -88,8 +86,22 @@ public class UserController {
         User user = userService.editPassword(Password,userId);
         return ResponseEntity.ok(user);
 
+    }
+    @GetMapping("/requestUpdate/{username}")
+    public ResponseEntity <String> requestForgetPassword(@PathVariable String username){
+        String code = userService.restPassword(username);
+        return ResponseEntity.ok(code);
+    }
+    @PutMapping("/requestUpdate/{username}/{code}")
+    public ResponseEntity <?> CheckForgetPasswordCode(@PathVariable String username,@PathVariable String code){
+        userService.checkCode(username,code);
+        return ResponseEntity.ok().build();
 
     }
-
+    @PutMapping("/restPassword/{username}/{password}")
+    public ResponseEntity <User> restPassword(@PathVariable String username,@PathVariable String password){
+        User user =userService.forgetPassword(password,username);
+        return ResponseEntity.ok(user);
+    }
 }
 

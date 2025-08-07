@@ -33,8 +33,6 @@ public class AuthController {
     }
 
 
-
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody loginRequest loginRequest) {
         User user = userService.getUserByUsername(loginRequest.getUsername());

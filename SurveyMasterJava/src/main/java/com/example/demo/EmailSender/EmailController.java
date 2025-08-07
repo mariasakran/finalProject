@@ -23,6 +23,11 @@ public class EmailController {
         emailService.sendNewSurveyNotification(surveyId);
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/send-reset/{username}/{code}")
+    public ResponseEntity<?> sendResetEmail(@PathVariable String username ,@PathVariable String code) {
+        emailService.sendResetPasswordEmail(username,code);
+        return ResponseEntity.ok().build();
+    }
 
 
 

@@ -60,8 +60,6 @@ public class UserService {
             User user = userOptional.get();
             user.setUsername(userDetails.getUsername());
             user.setEmail(userDetails.getEmail());
-            String encodedPassword = passwordEncoder.encode(userDetails.getPassword());
-            user.setPassword(encodedPassword);
             user.setRole(userDetails.getRole());
             user.setCategory(userDetails.getCategory());
             return userRepository.save(user);
@@ -77,14 +75,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User editPassword(String Password, Long userId) {
+    public User editPassword(String newPassword, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("user not found"));
-        String encodedPassword = passwordEncoder.encode(Password);
 
+        String encodedPassword = passwordEncoder.encode(newPassword);
         user.setPassword(encodedPassword);
+
         return userRepository.save(user);
     }
+
 
 
     public Notification sendNotification(Notification notification){
@@ -97,13 +97,42 @@ public class UserService {
    public void deleteNotificationById (Long notificationId){
      if(!notificationRepository.existsById(notificationId))
         throw new RuntimeException("notification is not found"+ notificationId);
-notificationRepository.deleteById(notificationId);
+     notificationRepository.deleteById(notificationId);
    }
    public Long deleteNotificationByUserId (Long userId){
     return notificationRepository.deleteByUserId(userId);
    }
-   public void requestUpdatePassword(String username){
+
+   public String restPassword(String username){
         User user=userRepository.findByUsername(username);
+        if(user==null){
+            throw new RuntimeException("user not found");
+        }
+        String code =randomCodeGenerator.generate(6);
+        user.setGenerateCode(code);
+        userRepository.save(user);
+        return code;
+   }
+   public void checkCode(String username ,String Code){
+       User user=userRepository.findByUsername(username);
+       if(user==null){
+           throw new RuntimeException("user not found");
+       }
+       if(user.getGenerateCode()==null){
+           throw new RuntimeException("something went wrong");
+       }
+       if(!user.getGenerateCode().equals(Code))
+           throw new RuntimeException("code wrong");
 
    }
+    public User forgetPassword(String Password, String username) {
+        User user = userRepository.findByUsername(username);
+        if(user==null){
+            throw new RuntimeException("user not found ");
+        }
+        String encodedPassword = passwordEncoder.encode(Password);
+        user.setPassword(encodedPassword);
+        return userRepository.save(user);
+    }
+
 }

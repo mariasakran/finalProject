@@ -24,6 +24,9 @@ public class User {
     private String  category;
     @Column
     private String role;
+    @Column
+    private String generateCode;
+
 
 
 
@@ -34,6 +37,7 @@ public class User {
         this.role = "USER";
 
     }
+
     public User(String username, String password, String email,String Role) {
         this.username = username;
         this.password = password;
@@ -45,7 +49,13 @@ public class User {
         this.role = "User";
     }
 
+    public String getGenerateCode() {
+        return generateCode;
+    }
 
+    public void setGenerateCode(String generateCode) {
+        this.generateCode = generateCode;
+    }
 
     public Long getId() {
         return id;

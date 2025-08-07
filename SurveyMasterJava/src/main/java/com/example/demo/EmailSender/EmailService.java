@@ -64,6 +64,7 @@ public class EmailService {
             try {
                 MimeMessage message = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
                 helper.setTo(user.getEmail());
                 helper.setSubject("📝 New Survey in Your Favorite Category!");
                 helper.setText(htmlContent, true);
@@ -73,6 +74,28 @@ public class EmailService {
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    public void sendResetPasswordEmail( String username, String resetCode) {
+        Context context = new Context();
+        context.setVariable("username", username);
+        context.setVariable("resetCode", resetCode);
+        User user =userRepository.findByUsername(username);
+
+        String htmlContent = templateEngine.process("restPassword", context);
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(user.getEmail());
+            helper.setSubject("🔐 Password Reset Code");
+            helper.setText(htmlContent, true); // true = HTML
+            helper.setFrom("your.email@gmail.com"); // Replace with your sender email
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
     }
 
